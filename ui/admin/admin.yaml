@@ -1,0 +1,405 @@
+about:
+  date: October 31, 2024 13:47:49
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+info:
+  number_relationships: 14
+  number_tables: 13
+info_toggle_checked: true
+resources:
+  Cart:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: customer_id
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+    - name: updated_date
+      type: DATETIME
+    tab_groups:
+    - direction: tomany
+      fks:
+      - cart_id
+      name: CartItemList
+      resource: CartItem
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    type: Cart
+    user_key: id
+  CartItem:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: cart_id
+    - name: product_id
+    - name: quantity
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+    - name: updated_date
+      type: DATETIME
+    tab_groups:
+    - direction: toone
+      fks:
+      - cart_id
+      name: cart
+      resource: Cart
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: CartItem
+    user_key: id
+  Category:
+    attributes:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+    - name: description
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+    - name: updated_date
+      type: DATETIME
+    - name: id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - category_id
+      name: ProductCategoryLinkList
+      resource: ProductCategoryLink
+    type: Category
+    user_key: name
+  Customer:
+    attributes:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+    - name: email
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+    - name: updated_date
+      type: DATETIME
+    - name: id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - customer_id
+      name: CartList
+      resource: Cart
+    - direction: tomany
+      fks:
+      - customer_id
+      name: OrderList
+      resource: Order
+    - direction: tomany
+      fks:
+      - customer_id
+      name: ReviewList
+      resource: Review
+    type: Customer
+    user_key: name
+  Discount:
+    attributes:
+    - label: ' description*'
+      name: description
+      search: true
+      sort: true
+    - name: code
+    - name: percentage
+    - name: valid_from
+      type: DATETIME
+    - name: valid_to
+      type: DATETIME
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+    - name: updated_date
+      type: DATETIME
+    - name: id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - discount_id
+      name: OrderDiscountLinkList
+      resource: OrderDiscountLink
+    type: Discount
+    user_key: description
+  Order:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: customer_id
+    - name: order_number
+    - name: order_date
+      type: DATETIME
+    - name: status
+    - name: total_amount
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+    - name: updated_date
+      type: DATETIME
+    tab_groups:
+    - direction: tomany
+      fks:
+      - order_id
+      name: OrderDiscountLinkList
+      resource: OrderDiscountLink
+    - direction: tomany
+      fks:
+      - order_id
+      name: OrderItemList
+      resource: OrderItem
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    type: Order
+    user_key: id
+  OrderDiscountLink:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: discount_id
+    - name: order_id
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+    - name: updated_date
+      type: DATETIME
+    tab_groups:
+    - direction: toone
+      fks:
+      - discount_id
+      name: discount
+      resource: Discount
+    - direction: toone
+      fks:
+      - order_id
+      name: order
+      resource: Order
+    type: OrderDiscountLink
+    user_key: id
+  OrderItem:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: order_id
+    - name: product_id
+    - name: quantity
+    - name: item_price
+    - name: total_price
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+    - name: updated_date
+      type: DATETIME
+    tab_groups:
+    - direction: toone
+      fks:
+      - order_id
+      name: order
+      resource: Order
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: OrderItem
+    user_key: id
+  Product:
+    attributes:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+    - name: description
+    - name: price
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+    - name: updated_date
+      type: DATETIME
+    - name: id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - product_id
+      name: CartItemList
+      resource: CartItem
+    - direction: tomany
+      fks:
+      - product_id
+      name: OrderItemList
+      resource: OrderItem
+    - direction: tomany
+      fks:
+      - product_id
+      name: ProductCategoryLinkList
+      resource: ProductCategoryLink
+    - direction: tomany
+      fks:
+      - product_id
+      name: ProductSupplierLinkList
+      resource: ProductSupplierLink
+    - direction: tomany
+      fks:
+      - product_id
+      name: ReviewList
+      resource: Review
+    type: Product
+    user_key: name
+  ProductCategoryLink:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: category_id
+    - name: product_id
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+    - name: updated_date
+      type: DATETIME
+    tab_groups:
+    - direction: toone
+      fks:
+      - category_id
+      name: category
+      resource: Category
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: ProductCategoryLink
+    user_key: id
+  ProductSupplierLink:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: product_id
+    - name: supplier_id
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+    - name: updated_date
+      type: DATETIME
+    tab_groups:
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    - direction: toone
+      fks:
+      - supplier_id
+      name: supplier
+      resource: Supplier
+    type: ProductSupplierLink
+    user_key: id
+  Review:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: customer_id
+    - name: product_id
+    - name: rating
+    - name: review_text
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+    - name: updated_date
+      type: DATETIME
+    tab_groups:
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: Review
+    user_key: id
+  Supplier:
+    attributes:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+    - name: contact_info
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+    - name: updated_date
+      type: DATETIME
+    - name: id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - supplier_id
+      name: ProductSupplierLinkList
+      resource: ProductSupplierLink
+    type: Supplier
+    user_key: name
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    detail_mode: tab
+    edit_on_mode: dblclick
+    exclude_listpicker: false
+    include_translation: 'false'
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    new_mode: dialog
+    pick_style: list
+    row_height: small,
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: 'false'

@@ -1,0 +1,84 @@
+{
+    "models": [
+        {
+            "classname": "Customer",
+            "code": "class Customer(Base):\n    __tablename__ = 'customer'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String, nullable=True)\n    email = Column(String, nullable=True)\n    created_date = Column(DateTime, default=datetime.now)\n    created_by = Column(String, nullable=True)\n    updated_date = Column(DateTime, onupdate=datetime.now)\n\n    def __repr__(self):\n        return f\"<Customer(name='{self.name}', email='{self.email}')>\"",
+            "description": "Table to store customer details.",
+            "name": "Customer"
+        },
+        {
+            "classname": "Product",
+            "code": "class Product(Base):\n    __tablename__ = 'product'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String, nullable=True)\n    description = Column(String, nullable=True)\n    price = Column(Float, nullable=True)\n    created_date = Column(DateTime, default=datetime.now)\n    created_by = Column(String, nullable=True)\n    updated_date = Column(DateTime, onupdate=datetime.now)\n\n    def __repr__(self):\n        return f\"<Product(name='{self.name}', price='{self.price}')>\"",
+            "description": "Table to store product information including price.",
+            "name": "Product"
+        },
+        {
+            "classname": "Order",
+            "code": "class Order(Base):\n    __tablename__ = 'order'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    order_number = Column(String, nullable=True)\n    customer_id = Column(Integer, ForeignKey('customer.id'), nullable=True)\n    order_date = Column(DateTime, default=datetime.now)\n    status = Column(String, nullable=True)\n    total_amount = Column(Float, nullable=True)\n    created_date = Column(DateTime, default=datetime.now)\n    created_by = Column(String, nullable=True)\n    updated_date = Column(DateTime, onupdate=datetime.now)\n\n    def __repr__(self):\n        return f\"<Order(order_number='{self.order_number}', status='{self.status}')>\"",
+            "description": "Table to store customer order details.",
+            "name": "Order"
+        },
+        {
+            "classname": "OrderItem",
+            "code": "class OrderItem(Base):\n    __tablename__ = 'order_item'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    order_id = Column(Integer, ForeignKey('order.id'), nullable=True)\n    product_id = Column(Integer, ForeignKey('product.id'), nullable=True)\n    quantity = Column(Integer, nullable=True)\n    item_price = Column(Float, nullable=True)\n    total_price = Column(Float, nullable=True)\n    created_date = Column(DateTime, default=datetime.now)\n    created_by = Column(String, nullable=True)\n    updated_date = Column(DateTime, onupdate=datetime.now)\n\n    def __repr__(self):\n        return f\"<OrderItem(order_id='{self.order_id}', product_id='{self.product_id}', quantity='{self.quantity}')>\"",
+            "description": "Link table between Orders and Products with extra order item details.",
+            "name": "OrderItem"
+        },
+        {
+            "classname": "Cart",
+            "code": "class Cart(Base):\n    __tablename__ = 'cart'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    customer_id = Column(Integer, ForeignKey('customer.id'), nullable=True)\n    created_date = Column(DateTime, default=datetime.now)\n    created_by = Column(String, nullable=True)\n    updated_date = Column(DateTime, onupdate=datetime.now)\n\n    def __repr__(self):\n        return f\"<Cart(customer_id='{self.customer_id}')>\"",
+            "description": "Table to store customer shopping cart details.",
+            "name": "Cart"
+        },
+        {
+            "classname": "CartItem",
+            "code": "class CartItem(Base):\n    __tablename__ = 'cart_item'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    cart_id = Column(Integer, ForeignKey('cart.id'), nullable=True)\n    product_id = Column(Integer, ForeignKey('product.id'), nullable=True)\n    quantity = Column(Integer, nullable=True)\n    created_date = Column(DateTime, default=datetime.now)\n    created_by = Column(String, nullable=True)\n    updated_date = Column(DateTime, onupdate=datetime.now)\n\n    def __repr__(self):\n        return f\"<CartItem(cart_id='{self.cart_id}', product_id='{self.product_id}', quantity='{self.quantity}')>\"",
+            "description": "Link table between Cart and Products with additional cart item details.",
+            "name": "CartItem"
+        },
+        {
+            "classname": "Category",
+            "code": "class Category(Base):\n    __tablename__ = 'category'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String, nullable=True)\n    description = Column(String, nullable=True)\n    created_date = Column(DateTime, default=datetime.now)\n    created_by = Column(String, nullable=True)\n    updated_date = Column(DateTime, onupdate=datetime.now)\n\n    def __repr__(self):\n        return f\"<Category(name='{self.name}')>\"",
+            "description": "Table for product categories.",
+            "name": "Category"
+        },
+        {
+            "classname": "ProductCategoryLink",
+            "code": "class ProductCategoryLink(Base):\n    __tablename__ = 'product_category_link'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    product_id = Column(Integer, ForeignKey('product.id'), nullable=True)\n    category_id = Column(Integer, ForeignKey('category.id'), nullable=True)\n    created_date = Column(DateTime, default=datetime.now)\n    created_by = Column(String, nullable=True)\n    updated_date = Column(DateTime, onupdate=datetime.now)\n\n    def __repr__(self):\n        return f\"<ProductCategoryLink(product_id='{self.product_id}', category_id='{self.category_id}')>\"",
+            "description": "Join table linking products to categories.",
+            "name": "ProductCategoryLink"
+        },
+        {
+            "classname": "Supplier",
+            "code": "class Supplier(Base):\n    __tablename__ = 'supplier'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String, nullable=True)\n    contact_info = Column(String, nullable=True)\n    created_date = Column(DateTime, default=datetime.now)\n    created_by = Column(String, nullable=True)\n    updated_date = Column(DateTime, onupdate=datetime.now)\n\n    def __repr__(self):\n        return f\"<Supplier(name='{self.name}')>\"",
+            "description": "Table for storing supplier information.",
+            "name": "Supplier"
+        },
+        {
+            "classname": "ProductSupplierLink",
+            "code": "class ProductSupplierLink(Base):\n    __tablename__ = 'product_supplier_link'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    product_id = Column(Integer, ForeignKey('product.id'), nullable=True)\n    supplier_id = Column(Integer, ForeignKey('supplier.id'), nullable=True)\n    created_date = Column(DateTime, default=datetime.now)\n    created_by = Column(String, nullable=True)\n    updated_date = Column(DateTime, onupdate=datetime.now)\n\n    def __repr__(self):\n        return f\"<ProductSupplierLink(product_id='{self.product_id}', supplier_id='{self.supplier_id}')>\"",
+            "description": "Join table linking products to suppliers.",
+            "name": "ProductSupplierLink"
+        },
+        {
+            "classname": "Review",
+            "code": "class Review(Base):\n    __tablename__ = 'review'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    product_id = Column(Integer, ForeignKey('product.id'), nullable=True)\n    customer_id = Column(Integer, ForeignKey('customer.id'), nullable=True)\n    rating = Column(Integer, nullable=True)\n    review_text = Column(String, nullable=True)\n    created_date = Column(DateTime, default=datetime.now)\n    created_by = Column(String, nullable=True)\n    updated_date = Column(DateTime, onupdate=datetime.now)\n\n    def __repr__(self):\n        return f\"<Review(product_id='{self.product_id}', customer_id='{self.customer_id}', rating='{self.rating}')>\"",
+            "description": "Table for customer reviews on products.",
+            "name": "Review"
+        },
+        {
+            "classname": "Discount",
+            "code": "class Discount(Base):\n    __tablename__ = 'discount'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    code = Column(String, nullable=True)\n    description = Column(String, nullable=True)\n    percentage = Column(Float, nullable=True)\n    valid_from = Column(DateTime, nullable=True)\n    valid_to = Column(DateTime, nullable=True)\n    created_date = Column(DateTime, default=datetime.now)\n    created_by = Column(String, nullable=True)\n    updated_date = Column(DateTime, onupdate=datetime.now)\n\n    def __repr__(self):\n        return f\"<Discount(code='{self.code}', percentage='{self.percentage}')>\"",
+            "description": "Table for discount coupons and codes.",
+            "name": "Discount"
+        },
+        {
+            "classname": "OrderDiscountLink",
+            "code": "class OrderDiscountLink(Base):\n    __tablename__ = 'order_discount_link'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    order_id = Column(Integer, ForeignKey('order.id'), nullable=True)\n    discount_id = Column(Integer, ForeignKey('discount.id'), nullable=True)\n    created_date = Column(DateTime, default=datetime.now)\n    created_by = Column(String, nullable=True)\n    updated_date = Column(DateTime, onupdate=datetime.now)\n\n    def __repr__(self):\n        return f\"<OrderDiscountLink(order_id='{self.order_id}', discount_id='{self.discount_id}')>\"",
+            "description": "Join table linking orders to discounts.",
+            "name": "OrderDiscountLink"
+        }
+    ],
+    "rules": [],
+    "test_data": "# Populating the database with sample data\nfrom sqlalchemy.orm import Session\n\nsession = Session(bind=engine)\n\n# Customers\ncustomer_1 = Customer(name=\"John Doe\", email=\"john.doe@example.com\", created_by=\"system\")\nsession.add(customer_1)\nsession.commit()\n\n# Products\nproduct_1 = Product(name=\"Men's Golf Shoe A\", description=\"High quality golf shoe\", price=120.00, created_by=\"admin\")\nproduct_2 = Product(name=\"Men's Golf Shoe B\", description=\"Premium leather golf shoe\", price=150.00, created_by=\"admin\")\nsession.add_all([product_1, product_2])\nsession.commit()\n\n# Orders\norder_1 = Order(order_number=\"ORD1001\", customer_id=customer_1.id, status=\"Pending\", total_amount=270.00, created_by=\"system\")\nsession.add(order_1)\nsession.commit()\n\n# Order Items\norder_item_1 = OrderItem(order_id=order_1.id, product_id=product_1.id, quantity=1, item_price=120.00, total_price=120.00, created_by=\"system\")\norder_item_2 = OrderItem(order_id=order_1.id, product_id=product_2.id, quantity=1, item_price=150.00, total_price=150.00, created_by=\"system\")\nsession.add_all([order_item_1, order_item_2])\nsession.commit()\n\n# Carts\ncart = Cart(customer_id=customer_1.id, created_by=\"auto\")\nsession.add(cart)\nsession.commit()\n\n# Cart Items\ncart_item = CartItem(cart_id=cart.id, product_id=product_1.id, quantity=1, created_by=\"auto\")\nsession.add(cart_item)\nsession.commit()\n\n# Categories\ncategory = Category(name=\"Shoes\", description=\"Footwear category\", created_by=\"system\")\nsession.add(category)\nsession.commit()\n\n# Product-Category Links\nproduct_category_link = ProductCategoryLink(product_id=product_1.id, category_id=category.id, created_by=\"system\")\nsession.add(product_category_link)\nsession.commit()\n\n# Suppliers\nsupplier = Supplier(name=\"Golf Supplies Inc.\", contact_info=\"123-456-7890\", created_by=\"admin\")\nsession.add(supplier)\nsession.commit()\n\n# Product-Supplier Links\nproduct_supplier_link = ProductSupplierLink(product_id=product_1.id, supplier_id=supplier.id, created_by=\"admin\")\nsession.add(product_supplier_link)\nsession.commit()\n\n# Reviews\nreview = Review(product_id=product_1.id, customer_id=customer_1.id, rating=5, review_text=\"Excellent shoe!\", created_by=\"auto\")\nsession.add(review)\nsession.commit()\n\n# Discounts\ndiscount = Discount(code=\"SAVE20\", description=\"Save 20% on your next purchase\", percentage=20.0, \n                    valid_from=datetime(2023, 1, 1), valid_to=datetime(2023, 12, 31), created_by=\"marketing\")\nsession.add(discount)\nsession.commit()\n\n# Order-Discount Links\norder_discount_link = OrderDiscountLink(order_id=order_1.id, discount_id=discount.id, created_by=\"system\")\nsession.add(order_discount_link)\nsession.commit()\n\nsession.close()"
+}

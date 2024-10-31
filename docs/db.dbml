@@ -1,0 +1,150 @@
+// Copy this text, paste to https://dbdiagram.io/d
+// Or, https://databasediagram.com/app
+// Or, view in VSCode with extension: "DBML Live Preview"
+
+Table Cart {
+    id INTEGER [primary key]
+    customer_id INTEGER 
+    created_date DATETIME 
+    created_by VARCHAR 
+    updated_date DATETIME 
+    }
+
+Table Customer {
+    id INTEGER [primary key]
+    name VARCHAR 
+    email VARCHAR 
+    created_date DATETIME 
+    created_by VARCHAR 
+    updated_date DATETIME 
+    }
+
+Table CartItem {
+    id INTEGER [primary key]
+    cart_id INTEGER 
+    product_id INTEGER 
+    quantity INTEGER 
+    created_date DATETIME 
+    created_by VARCHAR 
+    updated_date DATETIME 
+    }
+
+Table Product {
+    id INTEGER [primary key]
+    name VARCHAR 
+    description VARCHAR 
+    price FLOAT 
+    created_date DATETIME 
+    created_by VARCHAR 
+    updated_date DATETIME 
+    }
+
+Table Category {
+    id INTEGER [primary key]
+    name VARCHAR 
+    description VARCHAR 
+    created_date DATETIME 
+    created_by VARCHAR 
+    updated_date DATETIME 
+    }
+
+Table Discount {
+    id INTEGER [primary key]
+    code VARCHAR 
+    description VARCHAR 
+    percentage FLOAT 
+    valid_from DATETIME 
+    valid_to DATETIME 
+    created_date DATETIME 
+    created_by VARCHAR 
+    updated_date DATETIME 
+    }
+
+Table Order {
+    id INTEGER [primary key]
+    order_number VARCHAR 
+    customer_id INTEGER 
+    order_date DATETIME 
+    status VARCHAR 
+    total_amount FLOAT 
+    created_date DATETIME 
+    created_by VARCHAR 
+    updated_date DATETIME 
+    }
+
+Table OrderDiscountLink {
+    id INTEGER [primary key]
+    order_id INTEGER 
+    discount_id INTEGER 
+    created_date DATETIME 
+    created_by VARCHAR 
+    updated_date DATETIME 
+    }
+
+Table OrderItem {
+    id INTEGER [primary key]
+    order_id INTEGER 
+    product_id INTEGER 
+    quantity INTEGER 
+    item_price FLOAT 
+    total_price FLOAT 
+    created_date DATETIME 
+    created_by VARCHAR 
+    updated_date DATETIME 
+    }
+
+Table ProductCategoryLink {
+    id INTEGER [primary key]
+    product_id INTEGER 
+    category_id INTEGER 
+    created_date DATETIME 
+    created_by VARCHAR 
+    updated_date DATETIME 
+    }
+
+Table ProductSupplierLink {
+    id INTEGER [primary key]
+    product_id INTEGER 
+    supplier_id INTEGER 
+    created_date DATETIME 
+    created_by VARCHAR 
+    updated_date DATETIME 
+    }
+
+Table Supplier {
+    id INTEGER [primary key]
+    name VARCHAR 
+    contact_info VARCHAR 
+    created_date DATETIME 
+    created_by VARCHAR 
+    updated_date DATETIME 
+    }
+
+Table Review {
+    id INTEGER [primary key]
+    product_id INTEGER 
+    customer_id INTEGER 
+    rating INTEGER 
+    review_text VARCHAR 
+    created_date DATETIME 
+    created_by VARCHAR 
+    updated_date DATETIME 
+    }
+
+
+
+// Relationships
+    Ref: Cart.(customer_id) < Customer.(id)
+    Ref: CartItem.(cart_id) < Cart.(id)
+    Ref: CartItem.(product_id) < Product.(id)
+    Ref: Order.(customer_id) < Customer.(id)
+    Ref: OrderDiscountLink.(discount_id) < Discount.(id)
+    Ref: OrderDiscountLink.(order_id) < Order.(id)
+    Ref: OrderItem.(order_id) < Order.(id)
+    Ref: OrderItem.(product_id) < Product.(id)
+    Ref: ProductCategoryLink.(category_id) < Category.(id)
+    Ref: ProductCategoryLink.(product_id) < Product.(id)
+    Ref: ProductSupplierLink.(product_id) < Product.(id)
+    Ref: ProductSupplierLink.(supplier_id) < Supplier.(id)
+    Ref: Review.(customer_id) < Customer.(id)
+    Ref: Review.(product_id) < Product.(id)

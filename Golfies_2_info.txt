@@ -1,0 +1,2 @@
+Crete a Shopping Cart applciation for mens golf shoes
+Add CreatedDate, CreatedBy, UpdatedDate to every table
